@@ -128,21 +128,35 @@ flutter test test/models/category_test.dart
 
 ## 🔄 Continuous Integration
 
-This repository uses GitHub Actions for automated testing and quality assurance.
+This repository uses GitHub Actions for automated testing and quality assurance with a **build-first** approach.
+
+### **CI/CD Pipeline Structure**
+1. **🏗️ Build Job** (runs first)
+   - Multi-platform compilation verification (Android & Web)
+   - Flutter environment setup and validation
+   - Dependency installation and caching
+   - Build artifact generation with 7-day retention
+
+2. **🧪 Test Job** (runs after successful build)
+   - Static analysis with `flutter analyze`
+   - Code formatting verification with `dart format`
+   - Comprehensive test suite execution (25 tests)
+   - Test results artifact upload
 
 ### **CI/CD Features**
-- **Automated Testing**: Runs all 25 tests on every push and PR
-- **Static Analysis**: `flutter analyze` for code quality
-- **Code Formatting**: Ensures consistent code style with `dart format`
-- **Multi-Platform Builds**: Validates Android and Web builds
-- **Dependency Caching**: Optimized build times with pub cache
-- **Manual Triggers**: Workflow dispatch for custom branch testing
+- **🚀 Fail Fast**: Build verification before running expensive tests
+- **📦 Multi-Platform Builds**: Validates Android APK and Web builds simultaneously  
+- **🧪 Comprehensive Testing**: Static analysis, formatting, and unit tests
+- **⚡ Performance Optimized**: Pub dependency caching for faster builds
+- **🔄 Flexible Triggers**: Push to main, Pull Requests, Manual dispatch
+- **📊 Artifact Management**: Build outputs and test results with retention policies
 
 **Workflow Details:**
 - 📁 **Workflow File**: `.github/workflows/dart.yml`
 - 🔄 **Triggers**: Push to main, Pull Requests, Manual dispatch
 - 🧪 **Flutter Version**: Latest stable channel
 - ⚡ **Caching**: Pub dependencies for faster builds
+- 🏗️ **Build Strategy**: Matrix builds for Android and Web platforms
 
 ## 📱 Supported Platforms
 

@@ -18,69 +18,9 @@ on:
         default: 'main'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checkout the repository code
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          # Use custom branch if specified via workflow_dispatch, otherwise use default
-          ref: ${{ github.event.inputs.branch || github.ref }}
-
-      # Set up Flutter environment
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable # Use latest stable Flutter release
-          cache: true     # Enable caching for faster builds
-
-      # Cache pub dependencies for faster builds
-      - name: Cache pub dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ env.PUB_CACHE }}
-            ~/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-
-
-      # Install project dependencies
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Verify Flutter installation and dependencies
-      - name: Verify Flutter installation
-        run: flutter doctor -v
-
-      # Run static analysis to catch potential issues
-      - name: Run Flutter analyze
-        run: flutter analyze
-
-      # Check code formatting
-      - name: Check code formatting
-        run: dart format --output=none --set-exit-if-changed .
-
-      # Run all tests
-      - name: Run tests
-        run: flutter test
-
-      # Upload test results (optional)
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: |
-            test/
-            coverage/
-
-  # Optional: Build verification job
+  # Build verification job - runs first to ensure code compiles
   build:
     runs-on: ubuntu-latest
-    needs: test # Only run if tests pass
 
     strategy:
       matrix:
@@ -98,8 +38,22 @@ jobs:
           channel: stable
           cache: true
 
+      # Cache pub dependencies for faster builds
+      - name: Cache pub dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
       - name: Install dependencies
         run: flutter pub get
+
+      # Verify Flutter installation and dependencies
+      - name: Verify Flutter installation
+        run: flutter doctor -v
 
       # Build for different platforms to ensure compatibility
       - name: Build for Android
@@ -126,3 +80,59 @@ jobs:
           name: web-build
           path: build/web/
           retention-days: 7
+
+  # Test job - runs after build succeeds
+  test:
+    runs-on: ubuntu-latest
+    needs: build # Only run if build passes
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Use custom branch if specified via workflow_dispatch, otherwise use default
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      # Set up Flutter environment
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable # Use latest stable Flutter release
+          cache: true     # Enable caching for faster builds
+
+      # Cache pub dependencies for faster builds
+      - name: Cache pub dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Run static analysis to catch potential issues
+      - name: Run Flutter analyze
+        run: flutter analyze
+
+      # Check code formatting
+      - name: Check code formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      # Run all tests
+      - name: Run tests
+        run: flutter test
+
+      # Upload test results (optional)
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test/
+            coverage/
