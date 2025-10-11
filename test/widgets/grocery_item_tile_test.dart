@@ -6,7 +6,9 @@ import 'package:grocery_list/widgets/grocer_item_tile.dart';
 
 void main() {
   group('GroceryItemTile Widget Tests', () {
-    testWidgets('should display grocery item name, color, and quantity', (WidgetTester tester) async {
+    testWidgets('should display grocery item name, color, and quantity', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const category = Category('Dairy', Colors.blue);
       const groceryItem = GroceryItem(
@@ -19,16 +21,14 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: GroceryItemTile(groceryItem: groceryItem),
-          ),
+          home: Scaffold(body: GroceryItemTile(groceryItem: groceryItem)),
         ),
       );
 
       // Assert
       expect(find.text('Milk'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
-      
+
       // Check if the color container exists
       final container = tester.widget<Container>(
         find.descendant(
@@ -39,7 +39,9 @@ void main() {
       expect(container.color, Colors.blue);
     });
 
-    testWidgets('should display different grocery items correctly', (WidgetTester tester) async {
+    testWidgets('should display different grocery items correctly', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const fruitCategory = Category('Fruit', Colors.green);
       const groceryItem = GroceryItem(
@@ -52,16 +54,14 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: GroceryItemTile(groceryItem: groceryItem),
-          ),
+          home: Scaffold(body: GroceryItemTile(groceryItem: groceryItem)),
         ),
       );
 
       // Assert
       expect(find.text('Bananas'), findsOneWidget);
       expect(find.text('5'), findsOneWidget);
-      
+
       // Check if the color container has the correct color
       final container = tester.widget<Container>(
         find.descendant(
@@ -72,7 +72,9 @@ void main() {
       expect(container.color, Colors.green);
     });
 
-    testWidgets('should have correct layout structure', (WidgetTester tester) async {
+    testWidgets('should have correct layout structure', (
+      WidgetTester tester,
+    ) async {
       // Arrange
       const category = Category('Meat', Colors.red);
       const groceryItem = GroceryItem(
@@ -85,16 +87,14 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: GroceryItemTile(groceryItem: groceryItem),
-          ),
+          home: Scaffold(body: GroceryItemTile(groceryItem: groceryItem)),
         ),
       );
 
       // Assert
       expect(find.byType(ListTile), findsOneWidget);
       expect(find.byType(Container), findsOneWidget);
-      
+
       // Verify the structure: ListTile with leading Container and trailing Text
       final listTile = tester.widget<ListTile>(find.byType(ListTile));
       expect(listTile.leading, isA<Container>());
@@ -115,16 +115,17 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: GroceryItemTile(groceryItem: groceryItem),
-          ),
+          home: Scaffold(body: GroceryItemTile(groceryItem: groceryItem)),
         ),
       );
 
       // Assert
-      expect(find.text('Very Long Grocery Item Name That Might Overflow'), findsOneWidget);
+      expect(
+        find.text('Very Long Grocery Item Name That Might Overflow'),
+        findsOneWidget,
+      );
       expect(find.text('0'), findsOneWidget);
-      
+
       // Verify no overflow errors
       expect(tester.takeException(), isNull);
     });

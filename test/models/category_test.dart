@@ -22,10 +22,10 @@ void main() {
       // Assert
       expect(vegetables.title, 'Vegetables');
       expect(vegetables.color, Colors.green);
-      
+
       expect(dairy.title, 'Dairy');
       expect(dairy.color, Colors.blue);
-      
+
       expect(meat.title, 'Meat');
       expect(meat.color, Colors.red);
     });

@@ -8,7 +8,7 @@ void main() {
     test('should create a GroceryItem with all required properties', () {
       // Arrange
       const category = Category('Test Category', Colors.red);
-      
+
       // Act
       const groceryItem = GroceryItem(
         id: 'test-id',
@@ -27,11 +27,21 @@ void main() {
     test('should create a GroceryItem with different quantities', () {
       // Arrange
       const category = Category('Dairy', Colors.blue);
-      
+
       // Act & Assert
-      const item1 = GroceryItem(id: '1', name: 'Milk', quantity: 1, category: category);
-      const item2 = GroceryItem(id: '2', name: 'Cheese', quantity: 10, category: category);
-      
+      const item1 = GroceryItem(
+        id: '1',
+        name: 'Milk',
+        quantity: 1,
+        category: category,
+      );
+      const item2 = GroceryItem(
+        id: '2',
+        name: 'Cheese',
+        quantity: 10,
+        category: category,
+      );
+
       expect(item1.quantity, 1);
       expect(item2.quantity, 10);
     });

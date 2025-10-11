@@ -10,7 +10,9 @@ import 'package:grocery_list/main.dart';
 
 void main() {
   group('Grocery List App Integration Tests', () {
-    testWidgets('should display the grocery list app correctly', (WidgetTester tester) async {
+    testWidgets('should display the grocery list app correctly', (
+      WidgetTester tester,
+    ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
@@ -34,7 +36,9 @@ void main() {
       expect(materialApp.theme!.brightness, Brightness.dark);
     });
 
-    testWidgets('should display grocery items with quantities', (WidgetTester tester) async {
+    testWidgets('should display grocery items with quantities', (
+      WidgetTester tester,
+    ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
@@ -43,7 +47,9 @@ void main() {
       expect(find.text('5'), findsOneWidget); // Bananas
     });
 
-    testWidgets('should display color indicators for categories', (WidgetTester tester) async {
+    testWidgets('should display color indicators for categories', (
+      WidgetTester tester,
+    ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
@@ -60,7 +66,9 @@ void main() {
       expect(materialApp.title, 'Flutter Groceries');
     });
 
-    testWidgets('should handle scrolling in the grocery list', (WidgetTester tester) async {
+    testWidgets('should handle scrolling in the grocery list', (
+      WidgetTester tester,
+    ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
