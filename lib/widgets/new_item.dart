@@ -21,7 +21,21 @@ class _NewItemState extends State<NewItem> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: Text("Form goes here"),
+        child: Form(
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  label: const Text("Name"),
+                ),
+                maxLength: 50,
+                validator: (value) {
+                  return "Test. TO BE DONE YET";
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
