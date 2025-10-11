@@ -70,7 +70,7 @@ jobs:
       # Upload test results (optional)
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: |
@@ -113,7 +113,7 @@ jobs:
       # Upload build artifacts
       - name: Upload build artifacts
         if: matrix.platform == 'android'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-apk
           path: build/app/outputs/flutter-apk/
@@ -121,7 +121,7 @@ jobs:
 
       - name: Upload web build
         if: matrix.platform == 'web'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-build
           path: build/web/
