@@ -1,0 +1,128 @@
+name: Dart
+
+on:
+  # Runs on push to main branch
+  push:
+    branches: [ main ]
+  
+  # Runs on pull requests targeting main
+  pull_request:
+    branches: [ main ]
+  
+  # Allows manual workflow dispatch with custom branch selection
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run workflow on'
+        required: false
+        default: 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Use custom branch if specified via workflow_dispatch, otherwise use default
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      # Set up Flutter environment
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable # Use latest stable Flutter release
+          cache: true     # Enable caching for faster builds
+
+      # Cache pub dependencies for faster builds
+      - name: Cache pub dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Verify Flutter installation and dependencies
+      - name: Verify Flutter installation
+        run: flutter doctor -v
+
+      # Run static analysis to catch potential issues
+      - name: Run Flutter analyze
+        run: flutter analyze
+
+      # Check code formatting
+      - name: Check code formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      # Run all tests
+      - name: Run tests
+        run: flutter test
+
+      # Upload test results (optional)
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: |
+            test/
+            coverage/
+
+  # Optional: Build verification job
+  build:
+    runs-on: ubuntu-latest
+    needs: test # Only run if tests pass
+
+    strategy:
+      matrix:
+        platform: [android, web]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Build for different platforms to ensure compatibility
+      - name: Build for Android
+        if: matrix.platform == 'android'
+        run: flutter build apk --debug
+
+      - name: Build for Web
+        if: matrix.platform == 'web'
+        run: flutter build web
+
+      # Upload build artifacts
+      - name: Upload build artifacts
+        if: matrix.platform == 'android'
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/
+          retention-days: 7
+
+      - name: Upload web build
+        if: matrix.platform == 'web'
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: build/web/
+          retention-days: 7

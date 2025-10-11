@@ -1,0 +1,59 @@
+# Override GitHub language detection for Flutter platform-specific files
+# Treat platform-specific build files as vendored to show Dart as main language
+
+# Windows platform files
+windows/** linguist-vendored
+windows/runner/** linguist-vendored
+windows/flutter/** linguist-vendored
+
+# Linux platform files  
+linux/** linguist-vendored
+linux/runner/** linguist-vendored
+linux/flutter/** linguist-vendored
+
+# macOS platform files
+macos/** linguist-vendored
+macos/Runner/** linguist-vendored
+macos/Flutter/** linguist-vendored
+
+# iOS platform files (Objective-C/Swift)
+ios/** linguist-vendored
+ios/Runner/** linguist-vendored
+ios/Flutter/** linguist-vendored
+
+# Android platform files (Kotlin/Java)
+android/** linguist-vendored
+
+# Web platform files
+web/** linguist-vendored
+
+# Generated files
+**/generated_plugin_registrant.* linguist-generated
+**/GeneratedPluginRegistrant.* linguist-generated
+**/generated_plugins.cmake linguist-generated
+**/ephemeral/** linguist-generated
+
+# CMake and build configuration files
+**CMakeLists.txt linguist-vendored
+*.cmake linguist-vendored
+
+# Podfiles and iOS build files
+**/Podfile linguist-vendored
+**/Podfile.lock linguist-vendored
+*.pbxproj linguist-vendored
+*.xcconfig linguist-vendored
+*.plist linguist-vendored
+
+# Gradle files (Android)
+*.gradle linguist-vendored
+*.gradle.kts linguist-vendored
+gradle.properties linguist-vendored
+gradlew linguist-vendored
+gradlew.bat linguist-vendored
+
+# Manifest and configuration files
+*.manifest linguist-vendored
+*.rc linguist-vendored
+*.h linguist-vendored=true
+*.cc linguist-vendored=true
+*.cpp linguist-vendored=true
