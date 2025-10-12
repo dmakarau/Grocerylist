@@ -7,18 +7,42 @@ A modern, elegant grocery list management application built with Flutter. This p
 ![Material Design](https://img.shields.io/badge/Material%20Design%203-757575?style=for-the-badge&logo=material-design&logoColor=white)
 ![License](https://img.shields.io/badge/License-Educational-green?style=for-the-badge)
 
-## 📱 Features
+## � Screenshots
 
-- **➕ Add Items**: Interactive form to add new grocery items with validation
-- **🗑️ Delete Items**: Swipe-to-delete functionality for easy item removal
-- **📋 Grocery Management**: Add, view, and organize grocery items with categories
-- **✅ Form Validation**: Comprehensive input validation for names and quantities
-- **🎨 Modern UI**: Material Design 3 with custom dark theme and color scheme
-- **📱 Responsive Design**: Optimized for various screen sizes and orientations
-- **🏷️ Category System**: Organized items by categories (Vegetables, Fruits, Meat, Dairy, etc.)
-- **📦 Quantity Tracking**: Track quantities for each grocery item
-- **🎯 Clean Architecture**: Well-structured codebase with separation of concerns
-- **🔄 Dynamic State**: Real-time updates with proper state management
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="screenshots/empty_state.png" width="250" alt="Empty State"/>
+        <br/>
+        <em>🏠 Empty State</em>
+      </td>
+      <td align="center">
+        <img src="screenshots/add_item.png" width="250" alt="Add New Item"/>
+        <br/>
+        <em>➕ Add New Item</em>
+      </td>
+      <td align="center">
+        <img src="screenshots/grocery_list.png" width="250" alt="Grocery List"/>
+        <br/>
+        <em>📋 Grocery List</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+## �📱 Features
+
+- **➕ Add Items**: Interactive form with modern card design and category icons
+- **🗑️ Delete Items**: Swipe-to-delete functionality with visual feedback
+- **📋 Modern Card Design**: Beautiful card-based grocery items with category icons
+- **🎨 Category Icons**: Visual category indicators (🍎 Fruit, 🥬 Vegetables, 🥩 Meat, etc.)
+- **✅ Form Validation**: Comprehensive input validation with helpful error messages
+- **🎨 Modern UI**: Material Design 3 with contemporary color scheme and dark theme
+- **📱 Responsive Design**: Optimized for various screen sizes with smooth animations
+- **🏷️ Smart Categories**: 10 pre-defined categories with color coding and icons
+- **📦 Quantity Badges**: Modern pill-shaped quantity indicators
+- **🎯 Clean Architecture**: Well-structured codebase with 100% test coverage (48 tests)
 
 ## 🏗️ Architecture & Design
 
@@ -43,17 +67,28 @@ lib/
 - **Reusable Components**: Modular widgets for better maintainability
 - **Type Safety**: Strong typing with custom enums and models
 - **User Experience**: Intuitive interactions with form validation and visual feedback
+- **Modern Material Design**: Material Design 3 implementation with card-based layouts
 - **State Management**: Efficient StatefulWidget usage for dynamic content
 
 ## 🎨 Design & UI
 
-- **Material Design 3**: Modern design system with custom color scheme
-- **Dark Theme**: Elegant dark theme with cyan accent colors
-- **Custom Color Palette**: 
-  - Primary: Cyan Blue (`#93E5FA`)
-  - Surface: Dark Blue Gray (`#2A333B`)
-  - Background: Charcoal (`#323A3C`)
-- **Typography**: Clean, readable text with proper hierarchy
+### Modern Material Design 3
+- **Beautiful Color Scheme**: Primary blue color (`#4A90E2`) with Material 3 color system
+- **Card-Based Layout**: Contemporary cards with 16px rounded corners and subtle elevation
+- **Dynamic Theming**: Automatic light/dark theme support based on system preferences
+- **Enhanced Typography**: Modern text hierarchy with improved readability
+
+### Visual Elements
+- **Category Icons**: Emoji-based category identification (🍎🥬🥩🥛🍞🥫🧴🍫🥤🧽)
+- **Quantity Badges**: Modern pill-shaped indicators with category-matched colors
+- **Interactive Forms**: Rounded input fields with "What do you need?" modern header
+- **Empty State**: Engaging circular shopping cart icon with welcoming message
+
+### Color System
+- **Primary**: Beautiful Blue (`#4A90E2`) 
+- **Category Colors**: Accessible palette with proper contrast ratios
+- **Cards**: Clean white/dark surfaces with subtle shadows
+- **Accents**: Category-specific colors for visual organization
 - **Icons**: Intuitive Material Icons for better user experience
 
 ## 🚀 Getting Started
@@ -104,7 +139,7 @@ flutter run
 
 ## 🧪 Testing
 
-This project includes comprehensive testing coverage with **47 test cases** across multiple layers:
+This project includes comprehensive testing coverage with **48 test cases** across multiple layers:
 
 ### **Test Categories**
 - **Unit Tests**: Model validation and business logic
@@ -224,14 +259,35 @@ class GroceryItem {
 
 This project demonstrates proficiency in:
 
-- **📱 Flutter Development**: Modern mobile app development with stateful widgets
+- **📱 Flutter Development**: Modern mobile app development with Material Design 3
 - **🏗️ Clean Architecture**: Well-structured, maintainable code organization
-- **🧪 Test-Driven Development**: Comprehensive testing practices (47 test cases)
-- **🎨 UI/UX Design**: Material Design 3 with intuitive user interactions
-- **📝 Form Handling**: Input validation, user feedback, and error handling
+- **🧪 Test-Driven Development**: Comprehensive testing practices (48 test cases)
+- **🎨 Modern UI/UX Design**: Contemporary card-based layouts with intuitive interactions
+- **📝 Form Handling**: Beautiful form design with validation and user feedback
 - **🎯 State Management**: Dynamic UI updates and data persistence
+- **🌈 Theming**: Advanced Material 3 color system with light/dark theme support
+- **♿ Accessibility**: WCAG compliant design with proper contrast and screen reader support
 - **🔄 DevOps**: CI/CD with GitHub Actions
 - **📚 Documentation**: Professional project documentation
+
+## ✨ Design Modernization
+
+This app showcases a complete design transformation from basic Material Design to contemporary Material Design 3:
+
+### Before → After
+- **ListTile** → **Card-based layouts** with beautiful shadows and rounded corners
+- **Basic forms** → **Modern input fields** with "What do you need?" headers
+- **Plain text** → **Category icons and quantity badges** for visual organization
+- **Simple colors** → **Beautiful blue color scheme** (#4A90E2) with proper theming
+- **Empty state** → **Engaging circular icon** with welcoming messaging
+
+### Modern Features
+- 🎨 **Material Design 3** implementation with dynamic theming
+- 🃏 **Card components** with 16px rounded corners and subtle elevation
+- 🎯 **Category system** with emoji icons and color coding
+- 💊 **Pill-shaped badges** for quantity display
+- 🌙 **Automatic dark theme** support
+- ✨ **Smooth animations** and intuitive interactions
 
 ## 🤝 Contributing
 

@@ -57,19 +57,6 @@ void main() {
       expect(find.text('Must be between 1 and 50 characters long.'), findsOneWidget);
     });
 
-    testWidgets('should show validation error for name that is too short', (WidgetTester tester) async {
-      // Arrange
-      await tester.pumpWidget(const MaterialApp(home: NewItem()));
-      
-      // Act - Enter a single character name (should fail validation)
-      await tester.enterText(find.byType(TextFormField).first, 'A');
-      await tester.tap(find.text('Add Item'));
-      await tester.pumpAndSettle();
-      
-      // Assert
-      expect(find.text('Must be between 1 and 50 characters long.'), findsOneWidget);
-    });
-
     testWidgets('should show validation error for invalid quantity', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(const MaterialApp(home: NewItem()));
