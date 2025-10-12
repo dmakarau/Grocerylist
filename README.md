@@ -36,7 +36,7 @@ A modern, elegant grocery list management application built with Flutter. This p
 - **➕ Add Items**: Interactive form with modern card design and category icons
 - **🗑️ Delete Items**: Swipe-to-delete functionality with visual feedback
 - **📋 Modern Card Design**: Beautiful card-based grocery items with category icons
-- **🎨 Category Icons**: Visual category indicators (🍎 Fruit, 🥬 Vegetables, 🥩 Meat, etc.)
+- **🎨 Category Icons**: Material Design icons for visual category identification (� Vegetables, 🍎 Fruit, 🍽️ Meat, etc.)
 - **✅ Form Validation**: Comprehensive input validation with helpful error messages
 - **🎨 Modern UI**: Material Design 3 with contemporary color scheme and dark theme
 - **📱 Responsive Design**: Optimized for various screen sizes with smooth animations
@@ -108,7 +108,7 @@ lib/
 - **Enhanced Typography**: Modern text hierarchy with improved readability
 
 ### Visual Elements
-- **Category Icons**: Emoji-based category identification (🍎🥬🥩🥛🍞🥫🧴🍫🥤🧽)
+- **Category Icons**: Material Design icons for category identification (local_florist, apple, set_meal, local_drink, bakery_dining, cake, grass, shopping_bag, clean_hands)
 - **Quantity Badges**: Modern pill-shaped indicators with category-matched colors
 - **Interactive Forms**: Rounded input fields with "What do you need?" modern header
 - **Empty State**: Engaging circular shopping cart icon with welcoming message
@@ -217,7 +217,7 @@ This app showcases a complete design transformation from basic Material Design t
 ### Modern Features
 - 🎨 **Material Design 3** implementation with dynamic theming
 - 🃏 **Card components** with 16px rounded corners and subtle elevation
-- 🎯 **Category system** with emoji icons and color coding
+- 🎯 **Category system** with Material Design icons and color coding
 - 💊 **Pill-shaped badges** for quantity display
 - 🌙 **Automatic dark theme** support
 - ✨ **Smooth animations** and intuitive interactions
