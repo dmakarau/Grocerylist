@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_list/data/mock_items.dart';
+import 'package:grocery_list/models/grocery_item.dart';
 import 'package:grocery_list/widgets/grocer_item_tile.dart';
 import 'package:grocery_list/widgets/new_item.dart';
 
@@ -11,10 +11,18 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  void _addItem() {
-    Navigator.of(
+  final List<GroceryItem> _groceryItems = [];
+  void _addItem() async {
+    final newItem = await Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (ctx) => const NewItem()));
+    ).push<GroceryItem>(MaterialPageRoute(builder: (ctx) => const NewItem()));
+    if (newItem == null) {
+      return;
+    }
+
+    setState(() {
+      _groceryItems.add(newItem);
+    });
   }
 
   @override
@@ -24,11 +32,36 @@ class _GroceryListState extends State<GroceryList> {
         title: const Text('Grocery List'),
         actions: [IconButton(onPressed: _addItem, icon: const Icon(Icons.add))],
       ),
-      body: ListView.builder(
-        itemCount: groceryItems.length,
-        itemBuilder: (ctx, index) =>
-            GroceryItemTile(groceryItem: groceryItems[index]),
-      ),
+      body: _groceryItems.isEmpty
+          ? const Center(
+              child: Text(
+                "No items added yet.",
+                style: TextStyle(fontSize: 20),
+              ),
+            )
+          : ListView.builder(
+              itemCount: _groceryItems.length,
+              itemBuilder: (ctx, index) =>
+                  Dismissible(
+                    key: ValueKey(_groceryItems[index].id),
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      color: Theme.of(context).colorScheme.error.withOpacity(0.75),
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 4,
+                      ),
+                      child: const Icon(Icons.delete, color: Colors.white, size: 40),
+                    ),
+                    onDismissed: (direction) {
+                      setState(() {
+                        _groceryItems.removeAt(index);
+                      });
+                    },
+                    child: GroceryItemTile(groceryItem: _groceryItems[index])),
+            ),
     );
   }
 }
