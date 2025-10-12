@@ -22,7 +22,7 @@ class _NewItemState extends State<NewItem> {
       _formKey.currentState!.save();
       Navigator.of(context).pop(
         GroceryItem(
-          id: DateTime.now().toString(),
+          id: DateTime.now().microsecondsSinceEpoch.toString(),
           name: _enteredName,
           quantity: _enteredQuantity,
           category: _selectedCategory,
@@ -49,12 +49,12 @@ class _NewItemState extends State<NewItem> {
                       value.isEmpty ||
                       value.trim().length <= 1 ||
                       value.trim().length > 50) {
-                    return "Must be between 1 and 50 characters long.";
+                    return "Must be between 2 and 50 characters long.";
                   }
                   return null;
                 },
                 onSaved: (value) {
-                  _enteredName = value!;
+                  _enteredName = value!.trim();
                 },
               ),
               Row(
@@ -82,14 +82,14 @@ class _NewItemState extends State<NewItem> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: DropdownButtonFormField(
+                    child: DropdownButtonFormField<Category>(
                       value: _selectedCategory,
                       decoration: const InputDecoration(
                         label: Text("Category"),
                       ),
                       items: [
                         for (final category in categories.entries)
-                          DropdownMenuItem(
+                          DropdownMenuItem<Category>(
                             value: category.value,
                             child: Row(
                               children: [

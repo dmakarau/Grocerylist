@@ -20,6 +20,9 @@ class _GroceryListState extends State<GroceryList> {
       return;
     }
 
+    // Check if widget is still mounted before calling setState
+    if (!mounted) return;
+
     setState(() {
       _groceryItems.add(newItem);
     });
@@ -41,26 +44,29 @@ class _GroceryListState extends State<GroceryList> {
             )
           : ListView.builder(
               itemCount: _groceryItems.length,
-              itemBuilder: (ctx, index) =>
-                  Dismissible(
-                    key: ValueKey(_groceryItems[index].id),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      color: Theme.of(context).colorScheme.error.withOpacity(0.75),
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.only(right: 20),
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 4,
-                      ),
-                      child: const Icon(Icons.delete, color: Colors.white, size: 40),
+              itemBuilder: (ctx, index) {
+                final item = _groceryItems[index];
+                return Dismissible(
+                  key: ValueKey(item.id),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Theme.of(context).colorScheme.error.withValues(alpha: 0.75),
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 4,
                     ),
-                    onDismissed: (direction) {
-                      setState(() {
-                        _groceryItems.removeAt(index);
-                      });
-                    },
-                    child: GroceryItemTile(groceryItem: _groceryItems[index])),
+                    child: const Icon(Icons.delete, color: Colors.white, size: 40),
+                  ),
+                  onDismissed: (direction) {
+                    setState(() {
+                      _groceryItems.removeWhere((it) => it.id == item.id);
+                    });
+                  },
+                  child: GroceryItemTile(groceryItem: item),
+                );
+              },
             ),
     );
   }
