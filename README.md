@@ -1,14 +1,6 @@
 # 🛒 Flutter Grocery List
 
-A m  </table>
-</div>
-
-> **📝 To display screenshots**: Save your app screenshots as PNG files in the `screenshots/` directory with these exact names:
-> - `empty_state.png` - Modern empty state with circular shopping cart icon
-> - `add_item.png` - "What do you need?" form with modern input fields  
-> - `grocery_list.png` - Grocery list with card-based items and category icons
-
-## 📱 Featuresn, elegant grocery list management application built with Flutter. This project demonstrates clean architecture, comprehensive testing, and professional development practices for mobile app development.
+A modern, elegant grocery list management application built with Flutter. This project demonstrates clean architecture, comprehensive testing, and professional development practices for mobile app development.
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.8.1+-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/Dart-3.8.1+-0175C2?style=for-the-badge&logo=dart&logoColor=white)
@@ -52,19 +44,48 @@ A m  </table>
 - **📦 Quantity Badges**: Modern pill-shaped quantity indicators
 - **🎯 Clean Architecture**: Well-structured codebase with 100% test coverage (48 tests)
 
-## 🏗️ Architecture & Design
+## 🚀 Quick Start
 
-### **Project Structure**
+### Prerequisites
+- Flutter SDK 3.8.1 or later
+- Dart SDK 3.8.1 or later
+- Android Studio / VS Code with Flutter plugins
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/dmakarau/grocerylist.git
+   cd grocery_list
+   ```
+
+2. **Install dependencies**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Run the app**
+   ```bash
+   flutter run
+   ```
+
+4. **Run tests**
+   ```bash
+   flutter test
+   ```
+
+## 🏗️ Project Structure
+
 ```
 lib/
-├── main.dart                 # Application entry point
-├── data/                     # Data and constants
-│   └── categories.dart       # Category definitions and data
-├── models/                   # Data models
-│   ├── category.dart         # Category model and enum
-│   └── grocery_item.dart     # Grocery item model
-└── widgets/                  # UI components
-    ├── grocery_list.dart     # Main grocery list widget with add/delete
+├── main.dart                 # App entry point with theme configuration
+├── data/
+│   └── categories.dart       # Category definitions and colors
+├── models/
+│   ├── category.dart         # Category enum and model
+│   └── grocery_item.dart     # GroceryItem model
+└── widgets/
+    ├── grocery_list.dart     # Main grocery list widget
     ├── grocer_item_tile.dart # Individual item tile widget
     └── new_item.dart         # Add new item form widget
 ```
@@ -97,163 +118,17 @@ lib/
 - **Category Colors**: Accessible palette with proper contrast ratios
 - **Cards**: Clean white/dark surfaces with subtle shadows
 - **Accents**: Category-specific colors for visual organization
-- **Icons**: Intuitive Material Icons for better user experience
 
-## 🚀 Getting Started
+## 🧠 Core Concepts
 
-### **Key User Interactions**
-
-#### **➕ Adding Items**
-1. Tap the **"+"** button in the app bar
-2. Fill in the item details:
-   - **Name**: Enter item name (2-50 characters)
-   - **Quantity**: Set the quantity (positive number)
-   - **Category**: Select from predefined categories with color indicators
-3. Tap **"Add Item"** to save or **"Reset"** to clear the form
-4. Navigate back automatically after successful submission
-
-#### **🗑️ Deleting Items**
-- **Swipe left** on any item in the list to reveal the delete action
-- **Visual feedback**: Red background with delete icon appears during swipe
-- Item is **immediately removed** from the list after swipe completion
-
-#### **📱 Empty State**
-- Displays helpful message when no items are present
-- Encourages users to add their first item
-
-### **Prerequisites**
-- Flutter SDK 3.8.1 or higher
-- Dart SDK 3.8.1 or higher
-- iOS Simulator / Android Emulator or physical device
-- VS Code or Android Studio (recommended)
-
-### **Installation**
-
-1. **Clone the repository:**
-```bash
-git clone https://github.com/dmakarau/grocerylist.git
-cd grocerylist
-```
-
-2. **Install dependencies:**
-```bash
-flutter pub get
-```
-
-3. **Run the application:**
-```bash
-flutter run
-```
-
-## 🧪 Testing
-
-This project includes comprehensive testing coverage with **48 test cases** across multiple layers:
-
-### **Test Categories**
-- **Unit Tests**: Model validation and business logic
-- **Widget Tests**: UI component behavior, form validation, and user interactions  
-- **Integration Tests**: End-to-end user workflows (add, delete, navigation)
-
-### **Running Tests**
-```bash
-# Run all tests
-flutter test
-
-# Run with coverage
-flutter test --coverage
-
-# Run specific test file
-flutter test test/widgets/new_item_test.dart
-```
-
-### **Test Coverage**
-- ✅ **NewItem Widget**: Form validation, submission, navigation (15 tests)
-- ✅ **GroceryList Widget**: Add/delete functionality, state management (14 tests)
-- ✅ **Integration Tests**: Complete user workflows and edge cases (8 tests)
-- ✅ **Widget Components**: UI rendering and interactions (10 tests)
-- ✅ **Data Integrity**: Model validation and category system
-
-## 🛠️ Development Commands
-
-| Command | Description |
-|---------|-------------|
-| `flutter run` | Run the app in debug mode |
-| `flutter build apk` | Build Android APK |
-| `flutter build ios` | Build iOS app |
-| `flutter test` | Run all tests |
-| `flutter analyze` | Run static analysis |
-| `flutter pub get` | Install dependencies |
-| `flutter pub upgrade` | Upgrade dependencies |
-| `flutter clean` | Clean build artifacts |
-
-## 📦 Dependencies
-
-### **Production Dependencies**
-- **flutter**: SDK for building the application
-- **cupertino_icons**: iOS-style icons
-
-### **Development Dependencies**
-- **flutter_test**: Testing framework for Flutter applications
-- **flutter_lints**: Dart linting rules for code quality
-
-## 🔄 Continuous Integration
-
-This repository uses GitHub Actions for automated testing and quality assurance with a **build-first** approach.
-
-### **CI/CD Pipeline Structure**
-1. **🏗️ Build Job** (runs first)
-   - Multi-platform compilation verification (Android & Web)
-   - Flutter environment setup and validation
-   - Dependency installation and caching
-   - Build artifact generation with 7-day retention
-
-2. **🧪 Test Job** (runs after successful build)
-   - Static analysis with `flutter analyze`
-   - Code formatting verification with `dart format`
-   - Comprehensive test suite execution (47 tests)
-   - Test results artifact upload
-
-### **CI/CD Features**
-- **🚀 Fail Fast**: Build verification before running expensive tests
-- **📦 Multi-Platform Builds**: Validates Android APK and Web builds simultaneously  
-- **🧪 Comprehensive Testing**: Static analysis, formatting, and unit tests
-- **⚡ Performance Optimized**: Pub dependency caching for faster builds
-- **🔄 Flexible Triggers**: Push to main, Pull Requests, Manual dispatch
-- **📊 Artifact Management**: Build outputs and test results with retention policies
-
-**Workflow Details:**
-- 📁 **Workflow File**: `.github/workflows/dart.yml`
-- 🔄 **Triggers**: Push to main, Pull Requests, Manual dispatch
-- 🧪 **Flutter Version**: Latest stable channel
-- ⚡ **Caching**: Pub dependencies for faster builds
-- 🏗️ **Build Strategy**: Matrix builds for Android and Web platforms
-
-## 📱 Supported Platforms
-
-| Platform | Support | Notes |
-|----------|---------|-------|
-| 📱 **Android** | ✅ Full Support | Optimized for Android 21+ |
-| 🍎 **iOS** | ✅ Full Support | Compatible with iOS 12+ |
-| 🌐 **Web** | ✅ Full Support | Progressive Web App ready |
-| 🖥️ **Desktop** | ⚠️ Compatible | Windows, macOS, Linux support |
-
-## 🗂️ Data Models
-
-### **Category Model**
+### Categories
 ```dart
 enum Categories {
-  vegetables, fruit, meat, dairy, carbs, 
-  sweets, spices, convenience, hygiene, other
-}
-
-class Category {
-  final String id;
-  final String title;
-  final Color color;
+  vegetables, fruit, meat, dairy, carbs, sweets, spices, convenience, hygiene, other
 }
 ```
 
-### **Grocery Item Model**
+### Models
 ```dart
 class GroceryItem {
   final String id;
@@ -262,6 +137,56 @@ class GroceryItem {
   final Category category;
 }
 ```
+
+## 🧪 Testing
+
+This project includes comprehensive testing coverage with **48 test cases** across multiple layers:
+
+### Test Structure
+```
+test/
+├── widget_test.dart          # Integration tests
+├── models/
+│   ├── category_test.dart    # Category model tests
+│   └── grocery_item_test.dart # GroceryItem model tests
+└── widgets/
+    ├── grocery_list_test.dart # Grocery list widget tests
+    ├── grocer_item_tile_test.dart # Item tile widget tests
+    └── new_item_test.dart     # New item form tests
+```
+
+### Running Tests
+```bash
+# Run all tests
+flutter test
+
+# Run with coverage
+flutter test --coverage
+
+# Generate coverage report (requires lcov)
+genhtml coverage/lcov.info -o coverage/html
+```
+
+### Test Coverage
+- ✅ **Unit Tests**: Models and business logic
+- ✅ **Widget Tests**: UI components and interactions
+- ✅ **Integration Tests**: Complete user workflows
+- ✅ **Form Validation**: Input validation and error handling
+- ✅ **State Management**: Dynamic UI updates and data flow
+
+## 🚀 CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration:
+
+### Workflow Features
+- ✅ **Automated Testing**: Runs all 48 tests on every push/PR
+- ✅ **Multi-Platform**: Tests on Ubuntu latest
+- ✅ **Flutter Setup**: Automatic Flutter SDK installation
+- ✅ **Dependency Caching**: Optimized build times
+- ✅ **Code Quality**: Automated test reporting
+
+### Workflow File
+`.github/workflows/ci.yml` - Comprehensive CI pipeline with Flutter testing
 
 ## 🎯 Key Learning Objectives
 
@@ -309,25 +234,16 @@ This is an educational project, but contributions are welcome:
 
 ## 📄 License
 
-This project is created for educational purposes and learning Flutter development.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📚 Educational Context
+## 🙏 Acknowledgments
 
-This project serves as a practical implementation of Flutter development concepts including:
-
-- **State Management**: Effective widget state handling with StatefulWidget
-- **Form Development**: Input validation, user feedback, and data collection
-- **User Interactions**: Gesture handling, navigation, and dismissible actions
-- **Custom Widgets**: Creating reusable UI components and form elements
-- **Data Modeling**: Implementing proper data structures and ID generation
-- **Testing Strategies**: Unit, widget, and integration testing methodologies
-- **Project Organization**: Clean file structure and scalable architecture
-- **Modern UI Design**: Material Design 3 with interactive elements
+- Flutter team for the amazing framework
+- Material Design team for the beautiful design system
+- The Flutter community for inspiration and best practices
 
 ---
 
-## 💡 About
-
-This Flutter grocery list application demonstrates modern mobile development practices with a focus on clean code, comprehensive testing, and professional project setup. Perfect for learning Flutter development patterns and best practices.
-
-**Built with ❤️ using Flutter**
+<div align="center">
+  <strong>Built with ❤️ using Flutter</strong>
+</div>

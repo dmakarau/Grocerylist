@@ -20,10 +20,10 @@ class GroceryItemTile extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: groceryItem.category.color.withOpacity(0.15),
+                  color: groceryItem.category.color.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: groceryItem.category.color.withOpacity(0.3),
+                    color: groceryItem.category.color.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),

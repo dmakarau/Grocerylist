@@ -67,7 +67,7 @@ class _GroceryListState extends State<GroceryList> {
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -104,7 +104,7 @@ class _GroceryListState extends State<GroceryList> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Theme.of(context).colorScheme.surface,
-                    Theme.of(context).colorScheme.surface.withOpacity(0.8),
+                    Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
                   ],
                 ),
               ),
