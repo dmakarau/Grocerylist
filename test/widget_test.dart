@@ -1,7 +1,7 @@
 // Integration tests for the main Grocery List app
 //
 // These tests verify that the complete app works correctly, including
-// the MaterialApp setup, theming, and navigation to the grocery list.
+// the MaterialApp setup, theming, navigation, and the full add/delete workflow.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +10,7 @@ import 'package:grocery_list/main.dart';
 
 void main() {
   group('Grocery List App Integration Tests', () {
-    testWidgets('should display the grocery list app correctly', (
+    testWidgets('should display the grocery list app correctly with empty state', (
       WidgetTester tester,
     ) async {
       // Build our app and trigger a frame.
@@ -20,10 +20,11 @@ void main() {
       expect(find.text('Grocery List'), findsOneWidget);
       expect(find.byType(AppBar), findsOneWidget);
 
-      // Verify that grocery items from mock data are displayed
-      expect(find.text('Milk'), findsOneWidget);
-      expect(find.text('Bananas'), findsOneWidget);
-      expect(find.text('Beef Steak'), findsOneWidget);
+      // Verify that empty state is shown (since mock_items.dart was removed)
+      expect(find.text('No items added yet.'), findsOneWidget);
+      
+      // Verify add button is present
+      expect(find.byIcon(Icons.add), findsOneWidget);
     });
 
     testWidgets('should have dark theme applied', (WidgetTester tester) async {
@@ -36,27 +37,6 @@ void main() {
       expect(materialApp.theme!.brightness, Brightness.dark);
     });
 
-    testWidgets('should display grocery items with quantities', (
-      WidgetTester tester,
-    ) async {
-      // Build our app and trigger a frame.
-      await tester.pumpWidget(const MyApp());
-
-      // Verify quantities are displayed
-      expect(find.text('1'), findsNWidgets(2)); // Milk and Beef Steak
-      expect(find.text('5'), findsOneWidget); // Bananas
-    });
-
-    testWidgets('should display color indicators for categories', (
-      WidgetTester tester,
-    ) async {
-      // Build our app and trigger a frame.
-      await tester.pumpWidget(const MyApp());
-
-      // Verify that color containers are present (one for each grocery item)
-      expect(find.byType(Container), findsAtLeastNWidgets(3));
-    });
-
     testWidgets('should have correct app title', (WidgetTester tester) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
@@ -66,21 +46,148 @@ void main() {
       expect(materialApp.title, 'Flutter Groceries');
     });
 
-    testWidgets('should handle scrolling in the grocery list', (
+    testWidgets('complete add item workflow integration test', (
       WidgetTester tester,
     ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
-      // Verify that ListView is present and scrollable
-      expect(find.byType(ListView), findsOneWidget);
+      // Verify initial empty state
+      expect(find.text('No items added yet.'), findsOneWidget);
 
-      // Try scrolling (should not throw any errors)
-      await tester.drag(find.byType(ListView), const Offset(0, -100));
+      // Tap add button to navigate to NewItem screen
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+
+      // Verify we're on the NewItem screen
+      expect(find.text('Add New Item'), findsOneWidget);
+
+      // Fill in the form
+      await tester.enterText(find.byType(TextFormField).first, 'Integration Test Item');
+      await tester.enterText(find.byType(TextFormField).last, '3');
+
+      // Submit the form
+      await tester.tap(find.text('Add Item'));
+      await tester.pumpAndSettle();
+
+      // Verify we're back on the grocery list with the new item
+      expect(find.text('Grocery List'), findsOneWidget);
+      expect(find.text('Integration Test Item'), findsOneWidget);
+      expect(find.text('3'), findsOneWidget);
+      expect(find.text('No items added yet.'), findsNothing);
+    });
+
+    testWidgets('complete delete item workflow integration test', (
+      WidgetTester tester,
+    ) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Add an item first
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextFormField).first, 'Item to Delete');
+      await tester.tap(find.text('Add Item'));
+      await tester.pumpAndSettle();
+
+      // Verify item is present
+      expect(find.text('Item to Delete'), findsOneWidget);
+
+      // Swipe to delete the item
+      await tester.drag(find.byType(Dismissible), const Offset(-500, 0));
+      await tester.pumpAndSettle();
+
+      // Verify item is deleted and empty state returns
+      expect(find.text('Item to Delete'), findsNothing);
+      expect(find.text('No items added yet.'), findsOneWidget);
+    });
+
+    testWidgets('should handle multiple items workflow', (
+      WidgetTester tester,
+    ) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Add multiple items
+      for (int i = 1; i <= 3; i++) {
+        await tester.tap(find.byIcon(Icons.add));
+        await tester.pumpAndSettle();
+        await tester.enterText(find.byType(TextFormField).first, 'Item $i');
+        await tester.enterText(find.byType(TextFormField).last, '$i');
+        await tester.tap(find.text('Add Item'));
+        await tester.pumpAndSettle();
+      }
+
+      // Verify all items are present
+      expect(find.text('Item 1'), findsOneWidget);
+      expect(find.text('Item 2'), findsOneWidget);
+      expect(find.text('Item 3'), findsOneWidget);
+
+      // Delete one item
+      await tester.drag(find.byType(Dismissible).first, const Offset(-500, 0));
+      await tester.pumpAndSettle();
+
+      // Verify one item is deleted but others remain
+      expect(find.text('Item 2'), findsOneWidget);
+      expect(find.text('Item 3'), findsOneWidget);
+      expect(find.text('No items added yet.'), findsNothing);
+    });
+
+    testWidgets('should handle form validation in add item workflow', (
+      WidgetTester tester,
+    ) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Navigate to add item screen
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+
+      // Try to submit empty form
+      await tester.tap(find.text('Add Item'));
       await tester.pump();
 
-      // Verify no exceptions occurred
-      expect(tester.takeException(), isNull);
+      // Verify validation error is shown
+      expect(find.text('Must be between 1 and 50 characters long.'), findsOneWidget);
+
+      // Verify we're still on the NewItem screen
+      expect(find.text('Add New Item'), findsOneWidget);
+    });
+
+    testWidgets('should handle cancel workflow from add item screen', (
+      WidgetTester tester,
+    ) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Navigate to add item screen
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+
+      // Go back without adding item
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+
+      // Verify we're back on the grocery list with empty state
+      expect(find.text('Grocery List'), findsOneWidget);
+      expect(find.text('No items added yet.'), findsOneWidget);
+    });
+
+    testWidgets('should display category colors correctly', (
+      WidgetTester tester,
+    ) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Add an item
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextFormField).first, 'Test Item');
+      await tester.tap(find.text('Add Item'));
+      await tester.pumpAndSettle();
+
+      // Verify color container is present for the category
+      expect(find.byType(Container), findsAtLeastNWidgets(1));
     });
   });
 }

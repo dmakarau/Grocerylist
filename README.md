@@ -9,12 +9,16 @@ A modern, elegant grocery list management application built with Flutter. This p
 
 ## 📱 Features
 
+- **➕ Add Items**: Interactive form to add new grocery items with validation
+- **🗑️ Delete Items**: Swipe-to-delete functionality for easy item removal
 - **📋 Grocery Management**: Add, view, and organize grocery items with categories
+- **✅ Form Validation**: Comprehensive input validation for names and quantities
 - **🎨 Modern UI**: Material Design 3 with custom dark theme and color scheme
 - **📱 Responsive Design**: Optimized for various screen sizes and orientations
 - **🏷️ Category System**: Organized items by categories (Vegetables, Fruits, Meat, Dairy, etc.)
 - **📦 Quantity Tracking**: Track quantities for each grocery item
 - **🎯 Clean Architecture**: Well-structured codebase with separation of concerns
+- **🔄 Dynamic State**: Real-time updates with proper state management
 
 ## 🏗️ Architecture & Design
 
@@ -22,15 +26,15 @@ A modern, elegant grocery list management application built with Flutter. This p
 ```
 lib/
 ├── main.dart                 # Application entry point
-├── data/                     # Mock data and constants
-│   ├── categories.dart       # Category definitions and data
-│   └── dummy_items.dart      # Sample grocery items
+├── data/                     # Data and constants
+│   └── categories.dart       # Category definitions and data
 ├── models/                   # Data models
 │   ├── category.dart         # Category model and enum
 │   └── grocery_item.dart     # Grocery item model
 └── widgets/                  # UI components
-    ├── grocery_list.dart     # Main grocery list widget
-    └── grocery_item_tile.dart # Individual item tile widget
+    ├── grocery_list.dart     # Main grocery list widget with add/delete
+    ├── grocer_item_tile.dart # Individual item tile widget
+    └── new_item.dart         # Add new item form widget
 ```
 
 ### **Design Principles**
@@ -38,6 +42,8 @@ lib/
 - **Separation of Concerns**: Clear distinction between data, models, and UI
 - **Reusable Components**: Modular widgets for better maintainability
 - **Type Safety**: Strong typing with custom enums and models
+- **User Experience**: Intuitive interactions with form validation and visual feedback
+- **State Management**: Efficient StatefulWidget usage for dynamic content
 
 ## 🎨 Design & UI
 
@@ -51,6 +57,26 @@ lib/
 - **Icons**: Intuitive Material Icons for better user experience
 
 ## 🚀 Getting Started
+
+### **Key User Interactions**
+
+#### **➕ Adding Items**
+1. Tap the **"+"** button in the app bar
+2. Fill in the item details:
+   - **Name**: Enter item name (2-50 characters)
+   - **Quantity**: Set the quantity (positive number)
+   - **Category**: Select from predefined categories with color indicators
+3. Tap **"Add Item"** to save or **"Reset"** to clear the form
+4. Navigate back automatically after successful submission
+
+#### **🗑️ Deleting Items**
+- **Swipe left** on any item in the list to reveal the delete action
+- **Visual feedback**: Red background with delete icon appears during swipe
+- Item is **immediately removed** from the list after swipe completion
+
+#### **📱 Empty State**
+- Displays helpful message when no items are present
+- Encourages users to add their first item
 
 ### **Prerequisites**
 - Flutter SDK 3.8.1 or higher
@@ -78,12 +104,12 @@ flutter run
 
 ## 🧪 Testing
 
-This project includes comprehensive testing coverage with **25 test cases** across multiple layers:
+This project includes comprehensive testing coverage with **47 test cases** across multiple layers:
 
 ### **Test Categories**
 - **Unit Tests**: Model validation and business logic
-- **Widget Tests**: UI component behavior and rendering
-- **Integration Tests**: End-to-end user interactions
+- **Widget Tests**: UI component behavior, form validation, and user interactions  
+- **Integration Tests**: End-to-end user workflows (add, delete, navigation)
 
 ### **Running Tests**
 ```bash
@@ -94,14 +120,15 @@ flutter test
 flutter test --coverage
 
 # Run specific test file
-flutter test test/models/category_test.dart
+flutter test test/widgets/new_item_test.dart
 ```
 
 ### **Test Coverage**
-- ✅ **Category Model**: Enum validation and category creation
-- ✅ **Grocery Item Model**: Item properties and validation
-- ✅ **Widget Components**: UI rendering and interactions
-- ✅ **Data Integrity**: Mock data validation
+- ✅ **NewItem Widget**: Form validation, submission, navigation (15 tests)
+- ✅ **GroceryList Widget**: Add/delete functionality, state management (14 tests)
+- ✅ **Integration Tests**: Complete user workflows and edge cases (8 tests)
+- ✅ **Widget Components**: UI rendering and interactions (10 tests)
+- ✅ **Data Integrity**: Model validation and category system
 
 ## 🛠️ Development Commands
 
@@ -140,7 +167,7 @@ This repository uses GitHub Actions for automated testing and quality assurance 
 2. **🧪 Test Job** (runs after successful build)
    - Static analysis with `flutter analyze`
    - Code formatting verification with `dart format`
-   - Comprehensive test suite execution (25 tests)
+   - Comprehensive test suite execution (47 tests)
    - Test results artifact upload
 
 ### **CI/CD Features**
@@ -197,10 +224,12 @@ class GroceryItem {
 
 This project demonstrates proficiency in:
 
-- **📱 Flutter Development**: Modern mobile app development
-- **🏗️ Clean Architecture**: Well-structured, maintainable code
-- **🧪 Test-Driven Development**: Comprehensive testing practices
-- **🎨 UI/UX Design**: Material Design 3 implementation
+- **📱 Flutter Development**: Modern mobile app development with stateful widgets
+- **🏗️ Clean Architecture**: Well-structured, maintainable code organization
+- **🧪 Test-Driven Development**: Comprehensive testing practices (47 test cases)
+- **🎨 UI/UX Design**: Material Design 3 with intuitive user interactions
+- **📝 Form Handling**: Input validation, user feedback, and error handling
+- **🎯 State Management**: Dynamic UI updates and data persistence
 - **🔄 DevOps**: CI/CD with GitHub Actions
 - **📚 Documentation**: Professional project documentation
 
@@ -222,12 +251,14 @@ This project is created for educational purposes and learning Flutter developmen
 
 This project serves as a practical implementation of Flutter development concepts including:
 
-- **State Management**: Effective widget state handling
-- **Custom Widgets**: Creating reusable UI components
-- **Data Modeling**: Implementing proper data structures
-- **Testing Strategies**: Unit, widget, and integration testing
-- **Project Organization**: Clean file structure and architecture
-- **Modern UI Design**: Material Design 3 implementation
+- **State Management**: Effective widget state handling with StatefulWidget
+- **Form Development**: Input validation, user feedback, and data collection
+- **User Interactions**: Gesture handling, navigation, and dismissible actions
+- **Custom Widgets**: Creating reusable UI components and form elements
+- **Data Modeling**: Implementing proper data structures and ID generation
+- **Testing Strategies**: Unit, widget, and integration testing methodologies
+- **Project Organization**: Clean file structure and scalable architecture
+- **Modern UI Design**: Material Design 3 with interactive elements
 
 ---
 
