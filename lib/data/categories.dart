@@ -5,18 +5,18 @@ import 'package:grocery_list/models/category.dart';
 const categories = {
   Categories.vegetables: Category(
     'Vegetables',
-    Color.fromARGB(255, 0, 255, 128),
+    Color(0xFF4CAF50), // Fresh green
   ),
-  Categories.fruit: Category('Fruit', Color.fromARGB(255, 145, 255, 0)),
-  Categories.meat: Category('Meat', Color.fromARGB(255, 255, 102, 0)),
-  Categories.dairy: Category('Dairy', Color.fromARGB(255, 0, 208, 255)),
-  Categories.carbs: Category('Carbs', Color.fromARGB(255, 0, 60, 255)),
-  Categories.sweets: Category('Sweets', Color.fromARGB(255, 255, 149, 0)),
-  Categories.spices: Category('Spices', Color.fromARGB(255, 255, 187, 0)),
+  Categories.fruit: Category('Fruit', Color(0xFFFF9800)), // Vibrant orange
+  Categories.meat: Category('Meat', Color(0xFFE53935)), // Rich red
+  Categories.dairy: Category('Dairy', Color(0xFF2196F3)), // Clear blue
+  Categories.carbs: Category('Carbs', Color(0xFF8D6E63)), // Warm brown
+  Categories.sweets: Category('Sweets', Color(0xFFE91E63)), // Sweet pink
+  Categories.spices: Category('Spices', Color(0xFF689F38)), // Herb green
   Categories.convenience: Category(
     'Convenience',
-    Color.fromARGB(255, 191, 0, 255),
+    Color(0xFF9C27B0), // Royal purple
   ),
-  Categories.hygiene: Category('Hygiene', Color.fromARGB(255, 149, 0, 255)),
-  Categories.other: Category('Other', Color.fromARGB(255, 0, 225, 255)),
+  Categories.hygiene: Category('Hygiene', Color(0xFF00BCD4)), // Clean cyan
+  Categories.other: Category('Other', Color(0xFF607D8B)), // Neutral slate
 };

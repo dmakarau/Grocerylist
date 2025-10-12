@@ -17,6 +17,7 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = "";
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
+  
   void _saveItem() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -34,22 +35,50 @@ class _NewItemState extends State<NewItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add New Item")),
+      appBar: AppBar(
+        title: const Text("Add New Item"),
+        centerTitle: true,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(20),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Modern header
+              Text(
+                "What do you need?",
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Add a new item to your grocery list",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 32),
+              
+              // Modern name field
               TextFormField(
-                decoration: InputDecoration(label: const Text("Name")),
+                decoration: InputDecoration(
+                  labelText: "Name",
+                  hintText: "e.g., Bananas, Milk, Bread",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  prefixIcon: const Icon(Icons.shopping_cart_outlined),
+                ),
                 maxLength: 50,
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
                       value.trim().length <= 1 ||
                       value.trim().length > 50) {
-                    return "Must be between 2 and 50 characters long.";
+                    return "Must be between 1 and 50 characters long.";
                   }
                   return null;
                 },
@@ -57,12 +86,19 @@ class _NewItemState extends State<NewItem> {
                   _enteredName = value!.trim();
                 },
               ),
+              const SizedBox(height: 20),
+              
+              // Modern quantity and category row
               Row(
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text("Quantity"),
+                      decoration: InputDecoration(
+                        labelText: "Quantity",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        prefixIcon: const Icon(Icons.tag),
                       ),
                       initialValue: _enteredQuantity.toString(),
                       keyboardType: TextInputType.number,
@@ -80,12 +116,16 @@ class _NewItemState extends State<NewItem> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 16),
                   Expanded(
+                    flex: 2,
                     child: DropdownButtonFormField<Category>(
                       value: _selectedCategory,
-                      decoration: const InputDecoration(
-                        label: Text("Category"),
+                      decoration: InputDecoration(
+                        labelText: "Category",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       items: [
                         for (final category in categories.entries)
@@ -94,11 +134,14 @@ class _NewItemState extends State<NewItem> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 16,
-                                  height: 16,
-                                  color: category.value.color,
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: category.value.color,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
                                 ),
-                                const SizedBox(width: 6),
+                                const SizedBox(width: 12),
                                 Text(category.value.title),
                               ],
                             ),
@@ -113,22 +156,45 @@ class _NewItemState extends State<NewItem> {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              
+              const Spacer(),
+              
+              // Modern buttons
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      _formKey.currentState!.reset();
-                    },
-                    child: const Text("Reset"),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        _formKey.currentState!.reset();
+                      },
+                      icon: const Icon(Icons.refresh),
+                      label: const Text("Reset"),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: _saveItem,
-                    child: const Text("Add Item"),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: FilledButton.icon(
+                      onPressed: _saveItem,
+                      icon: const Icon(Icons.add),
+                      label: const Text("Add Item"),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
