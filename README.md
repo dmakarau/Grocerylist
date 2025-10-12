@@ -1,6 +1,14 @@
 # 🛒 Flutter Grocery List
 
-A modern, elegant grocery list management application built with Flutter. This project demonstrates clean architecture, comprehensive testing, and professional development practices for mobile app development.
+A m  </table>
+</div>
+
+> **📝 To display screenshots**: Save your app screenshots as PNG files in the `screenshots/` directory with these exact names:
+> - `empty_state.png` - Modern empty state with circular shopping cart icon
+> - `add_item.png` - "What do you need?" form with modern input fields  
+> - `grocery_list.png` - Grocery list with card-based items and category icons
+
+## 📱 Featuresn, elegant grocery list management application built with Flutter. This project demonstrates clean architecture, comprehensive testing, and professional development practices for mobile app development.
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.8.1+-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/Dart-3.8.1+-0175C2?style=for-the-badge&logo=dart&logoColor=white)
