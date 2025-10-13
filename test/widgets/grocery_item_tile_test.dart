@@ -28,15 +28,21 @@ void main() {
       // Assert
       expect(find.text('Milk'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
+      expect(find.text('Dairy'), findsOneWidget); // Category title is displayed
 
-      // Check if the color container exists
-      final container = tester.widget<Container>(
-        find.descendant(
-          of: find.byType(GroceryItemTile),
-          matching: find.byType(Container),
-        ),
+      // Check if the category icon container exists with correct styling
+      final categoryContainers = find.descendant(
+        of: find.byType(GroceryItemTile),
+        matching: find.byType(Container),
       );
-      expect(container.color, Colors.blue);
+      expect(
+        categoryContainers,
+        findsWidgets,
+      ); // Multiple containers in new design
+
+      // Verify Card structure exists
+      expect(find.byType(Card), findsOneWidget);
+      expect(find.byType(Icon), findsOneWidget); // Category icon
     });
 
     testWidgets('should display different grocery items correctly', (
@@ -61,15 +67,13 @@ void main() {
       // Assert
       expect(find.text('Bananas'), findsOneWidget);
       expect(find.text('5'), findsOneWidget);
+      expect(find.text('Fruit'), findsOneWidget);
 
-      // Check if the color container has the correct color
-      final container = tester.widget<Container>(
-        find.descendant(
-          of: find.byType(GroceryItemTile),
-          matching: find.byType(Container),
-        ),
-      );
-      expect(container.color, Colors.green);
+      // Check for the fruit icon (eco icon for fruit category)
+      expect(find.byIcon(Icons.eco), findsOneWidget);
+
+      // Verify Card structure
+      expect(find.byType(Card), findsOneWidget);
     });
 
     testWidgets('should have correct layout structure', (
@@ -91,15 +95,23 @@ void main() {
         ),
       );
 
-      // Assert
-      expect(find.byType(ListTile), findsOneWidget);
-      expect(find.byType(Container), findsOneWidget);
+      // Assert - Check for modern Card-based structure
+      expect(find.byType(Card), findsOneWidget);
+      expect(find.byType(Row), findsOneWidget); // Main layout row
+      expect(find.byType(Column), findsOneWidget); // Item details column
+      expect(find.byType(Icon), findsOneWidget); // Category icon
 
-      // Verify the structure: ListTile with leading Container and trailing Text
-      final listTile = tester.widget<ListTile>(find.byType(ListTile));
-      expect(listTile.leading, isA<Container>());
-      expect(listTile.trailing, isA<Text>());
-      expect(listTile.title, isA<Text>());
+      // Verify multiple containers (category indicator + quantity badge)
+      final containers = find.descendant(
+        of: find.byType(GroceryItemTile),
+        matching: find.byType(Container),
+      );
+      expect(containers, findsWidgets);
+
+      // Verify text elements are present
+      expect(find.text('Beef Steak'), findsOneWidget);
+      expect(find.text('1'), findsOneWidget);
+      expect(find.text('Meat'), findsOneWidget);
     });
 
     testWidgets('should handle edge cases', (WidgetTester tester) async {
@@ -125,9 +137,39 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('0'), findsOneWidget);
+      expect(find.text('Other'), findsOneWidget);
+
+      // Verify the modern structure still works with edge cases
+      expect(find.byType(Card), findsOneWidget);
+      expect(
+        find.byIcon(Icons.shopping_cart),
+        findsOneWidget,
+      ); // Default icon for 'Other'
 
       // Verify no overflow errors
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('should display correct icons for different categories', (
+      WidgetTester tester,
+    ) async {
+      // Test vegetables category
+      const vegetablesCategory = Category('Vegetables', Colors.green);
+      const vegetablesItem = GroceryItem(
+        id: 'test-veg',
+        name: 'Broccoli',
+        quantity: 1,
+        category: vegetablesCategory,
+      );
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: GroceryItemTile(groceryItem: vegetablesItem)),
+        ),
+      );
+
+      expect(find.byIcon(Icons.local_florist), findsOneWidget);
+      expect(find.text('Vegetables'), findsOneWidget);
     });
   });
 }
