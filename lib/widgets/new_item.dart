@@ -118,39 +118,51 @@ class _NewItemState extends State<NewItem> {
                   const SizedBox(width: 16),
                   Expanded(
                     flex: 2,
-                    child: DropdownButtonFormField<Category>(
+                    child: FormField<Category>(
                       key: ValueKey(_selectedCategory),
-                      value: _selectedCategory,
-                      decoration: InputDecoration(
-                        labelText: "Category",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      items: [
-                        for (final category in categories.entries)
-                          DropdownMenuItem<Category>(
-                            value: category.value,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    color: category.value.color,
-                                    borderRadius: BorderRadius.circular(4),
+                      initialValue: _selectedCategory,
+                      builder: (FormFieldState<Category> state) {
+                        return InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: "Category",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            errorText: state.errorText,
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<Category>(
+                              value: state.value,
+                              isExpanded: true,
+                              items: [
+                                for (final category in categories.entries)
+                                  DropdownMenuItem<Category>(
+                                    value: category.value,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                            color: category.value.color,
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Text(category.value.title),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 12),
-                                Text(category.value.title),
                               ],
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedCategory = value!;
+                                });
+                                state.didChange(value);
+                              },
                             ),
                           ),
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedCategory = value!;
-                        });
+                        );
                       },
                       onSaved: (value) {
                         _selectedCategory = value ?? categories[Categories.vegetables]!;
