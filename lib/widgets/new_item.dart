@@ -119,6 +119,7 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<Category>(
+                      key: ValueKey(_selectedCategory),
                       value: _selectedCategory,
                       decoration: InputDecoration(
                         labelText: "Category",
