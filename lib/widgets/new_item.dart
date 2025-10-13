@@ -61,6 +61,7 @@ class _NewItemState extends State<NewItem> {
 
               // Modern name field
               TextFormField(
+                key: const ValueKey("name_field"),
                 decoration: InputDecoration(
                   labelText: "Name",
                   hintText: "e.g., Bananas, Milk, Bread",
@@ -75,7 +76,7 @@ class _NewItemState extends State<NewItem> {
                       value.isEmpty ||
                       value.trim().length <= 1 ||
                       value.trim().length > 50) {
-                    return "Must be between 1 and 50 characters long.";
+                    return "Must be between 2 and 50 characters long.";
                   }
                   return null;
                 },
@@ -90,6 +91,7 @@ class _NewItemState extends State<NewItem> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      key: ValueKey(_enteredQuantity),
                       decoration: InputDecoration(
                         labelText: "Quantity",
                         border: OutlineInputBorder(
@@ -117,7 +119,6 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<Category>(
-                      // ignore: deprecated_member_use
                       value: _selectedCategory,
                       decoration: InputDecoration(
                         labelText: "Category",
@@ -150,6 +151,9 @@ class _NewItemState extends State<NewItem> {
                           _selectedCategory = value!;
                         });
                       },
+                      onSaved: (value) {
+                        _selectedCategory = value ?? categories[Categories.vegetables]!;
+                      },
                     ),
                   ),
                 ],
@@ -163,6 +167,10 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {
+                        setState(() {
+                          _selectedCategory = categories[Categories.vegetables]!;
+                          _enteredQuantity = 1;
+                        });
                         _formKey.currentState!.reset();
                       },
                       icon: const Icon(Icons.refresh),

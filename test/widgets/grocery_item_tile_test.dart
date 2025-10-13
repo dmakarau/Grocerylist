@@ -69,8 +69,8 @@ void main() {
       expect(find.text('5'), findsOneWidget);
       expect(find.text('Fruit'), findsOneWidget);
 
-      // Check for the fruit icon (apple icon for fruit category)
-      expect(find.byIcon(Icons.apple), findsOneWidget);
+      // Check for the fruit icon (eco icon for fruit category)
+      expect(find.byIcon(Icons.eco), findsOneWidget);
 
       // Verify Card structure
       expect(find.byType(Card), findsOneWidget);

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF4A90E2), // Beautiful blue
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
         ),
         cardTheme: const CardThemeData(
           elevation: 2,
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
       ),
-      themeMode: ThemeMode.dark, // Set to dark for tests
+      themeMode: ThemeMode.system, // Automatic light/dark theme based on system
       home: const GroceryList(),
     );
   }

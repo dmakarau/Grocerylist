@@ -85,7 +85,7 @@ class GroceryItemTile extends StatelessWidget {
       case 'vegetables':
         return Icons.local_florist;
       case 'fruit':
-        return Icons.apple;
+        return Icons.eco; // More universally available than Icons.apple
       case 'meat':
         return Icons.set_meal;
       case 'dairy':

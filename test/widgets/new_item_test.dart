@@ -46,7 +46,7 @@ void main() {
 
       // Assert
       expect(
-        find.text('Must be between 1 and 50 characters long.'),
+        find.text('Must be between 2 and 50 characters long.'),
         findsOneWidget,
       );
     });
@@ -64,7 +64,7 @@ void main() {
 
       // Assert
       expect(
-        find.text('Must be between 1 and 50 characters long.'),
+        find.text('Must be between 2 and 50 characters long.'),
         findsOneWidget,
       );
     });
@@ -272,7 +272,7 @@ void main() {
       final nameField = find.byType(TextFormField).first;
 
       // Enter exactly 50 characters (should be allowed)
-      final fiftyChars = 'A' * 50;
+      final fiftyChars = List.filled(50, 'A').join();
       await tester.enterText(nameField, fiftyChars);
       await tester.pump();
 
@@ -286,7 +286,7 @@ void main() {
 
       // Should not show validation error for exactly 50 characters
       expect(
-        find.text('Must be between 1 and 50 characters long.'),
+        find.text('Must be between 2 and 50 characters long.'),
         findsNothing,
       );
     });

@@ -28,14 +28,17 @@ void main() {
       },
     );
 
-    testWidgets('should have dark theme applied', (WidgetTester tester) async {
+    testWidgets('should have automatic theme support', (WidgetTester tester) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 
-      // Verify that the MaterialApp has the correct theme
+      // Verify that the MaterialApp has both light and dark themes configured
       final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
       expect(materialApp.theme, isNotNull);
-      expect(materialApp.theme!.brightness, Brightness.dark);
+      expect(materialApp.darkTheme, isNotNull);
+      expect(materialApp.theme!.brightness, Brightness.light);
+      expect(materialApp.darkTheme!.brightness, Brightness.dark);
+      expect(materialApp.themeMode, ThemeMode.system);
     });
 
     testWidgets('should have correct app title', (WidgetTester tester) async {
@@ -156,7 +159,7 @@ void main() {
 
       // Verify validation error is shown
       expect(
-        find.text('Must be between 1 and 50 characters long.'),
+        find.text('Must be between 2 and 50 characters long.'),
         findsOneWidget,
       );
 
