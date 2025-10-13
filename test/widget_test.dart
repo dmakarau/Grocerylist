@@ -10,22 +10,23 @@ import 'package:grocery_list/main.dart';
 
 void main() {
   group('Grocery List App Integration Tests', () {
-    testWidgets('should display the grocery list app correctly with empty state', (
-      WidgetTester tester,
-    ) async {
-      // Build our app and trigger a frame.
-      await tester.pumpWidget(const MyApp());
+    testWidgets(
+      'should display the grocery list app correctly with empty state',
+      (WidgetTester tester) async {
+        // Build our app and trigger a frame.
+        await tester.pumpWidget(const MyApp());
 
-      // Verify that the app bar is displayed with correct title
-      expect(find.text('Grocery List'), findsOneWidget);
-      expect(find.byType(AppBar), findsOneWidget);
+        // Verify that the app bar is displayed with correct title
+        expect(find.text('Grocery List'), findsOneWidget);
+        expect(find.byType(AppBar), findsOneWidget);
 
-      // Verify that empty state is shown (since mock_items.dart was removed)
-      expect(find.text('No items added yet.'), findsOneWidget);
-      
-      // Verify add button is present
-      expect(find.byIcon(Icons.add), findsOneWidget);
-    });
+        // Verify that empty state is shown (since mock_items.dart was removed)
+        expect(find.text('No items added yet.'), findsOneWidget);
+
+        // Verify add button is present
+        expect(find.byIcon(Icons.add), findsOneWidget);
+      },
+    );
 
     testWidgets('should have dark theme applied', (WidgetTester tester) async {
       // Build our app and trigger a frame.
@@ -63,7 +64,10 @@ void main() {
       expect(find.text('Add New Item'), findsOneWidget);
 
       // Fill in the form
-      await tester.enterText(find.byType(TextFormField).first, 'Integration Test Item');
+      await tester.enterText(
+        find.byType(TextFormField).first,
+        'Integration Test Item',
+      );
       await tester.enterText(find.byType(TextFormField).last, '3');
 
       // Submit the form
@@ -86,7 +90,10 @@ void main() {
       // Add an item first
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextFormField).first, 'Item to Delete');
+      await tester.enterText(
+        find.byType(TextFormField).first,
+        'Item to Delete',
+      );
       await tester.tap(find.text('Add Item'));
       await tester.pumpAndSettle();
 
@@ -148,7 +155,10 @@ void main() {
       await tester.pump();
 
       // Verify validation error is shown
-      expect(find.text('Must be between 1 and 50 characters long.'), findsOneWidget);
+      expect(
+        find.text('Must be between 1 and 50 characters long.'),
+        findsOneWidget,
+      );
 
       // Verify we're still on the NewItem screen
       expect(find.text('Add New Item'), findsOneWidget);

@@ -17,7 +17,7 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = "";
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
-  
+
   void _saveItem() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -35,10 +35,7 @@ class _NewItemState extends State<NewItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add New Item"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Add New Item"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -61,7 +58,7 @@ class _NewItemState extends State<NewItem> {
                 ),
               ),
               const SizedBox(height: 32),
-              
+
               // Modern name field
               TextFormField(
                 decoration: InputDecoration(
@@ -87,7 +84,7 @@ class _NewItemState extends State<NewItem> {
                 },
               ),
               const SizedBox(height: 20),
-              
+
               // Modern quantity and category row
               Row(
                 children: [
@@ -157,9 +154,9 @@ class _NewItemState extends State<NewItem> {
                   ),
                 ],
               ),
-              
+
               const Spacer(),
-              
+
               // Modern buttons
               Row(
                 children: [

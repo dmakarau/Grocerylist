@@ -50,7 +50,10 @@ class _GroceryListState extends State<GroceryList> {
               icon: const Icon(Icons.add, size: 20),
               label: const Text("Add"),
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
               ),
             ),
           ),
@@ -67,7 +70,9 @@ class _GroceryListState extends State<GroceryList> {
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer.withValues(alpha: 0.3),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -79,10 +84,11 @@ class _GroceryListState extends State<GroceryList> {
                     const SizedBox(height: 24),
                     Text(
                       "No items added yet.",
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
@@ -104,7 +110,9 @@ class _GroceryListState extends State<GroceryList> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Theme.of(context).colorScheme.surface,
-                    Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
+                    Theme.of(
+                      context,
+                    ).colorScheme.surface.withValues(alpha: 0.8),
                   ],
                 ),
               ),

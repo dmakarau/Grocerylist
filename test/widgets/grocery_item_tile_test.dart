@@ -35,7 +35,10 @@ void main() {
         of: find.byType(GroceryItemTile),
         matching: find.byType(Container),
       );
-      expect(categoryContainers, findsWidgets); // Multiple containers in new design
+      expect(
+        categoryContainers,
+        findsWidgets,
+      ); // Multiple containers in new design
 
       // Verify Card structure exists
       expect(find.byType(Card), findsOneWidget);
@@ -68,7 +71,7 @@ void main() {
 
       // Check for the fruit icon (apple icon for fruit category)
       expect(find.byIcon(Icons.apple), findsOneWidget);
-      
+
       // Verify Card structure
       expect(find.byType(Card), findsOneWidget);
     });
@@ -97,7 +100,7 @@ void main() {
       expect(find.byType(Row), findsOneWidget); // Main layout row
       expect(find.byType(Column), findsOneWidget); // Item details column
       expect(find.byType(Icon), findsOneWidget); // Category icon
-      
+
       // Verify multiple containers (category indicator + quantity badge)
       final containers = find.descendant(
         of: find.byType(GroceryItemTile),
@@ -138,7 +141,10 @@ void main() {
 
       // Verify the modern structure still works with edge cases
       expect(find.byType(Card), findsOneWidget);
-      expect(find.byIcon(Icons.shopping_cart), findsOneWidget); // Default icon for 'Other'
+      expect(
+        find.byIcon(Icons.shopping_cart),
+        findsOneWidget,
+      ); // Default icon for 'Other'
 
       // Verify no overflow errors
       expect(tester.takeException(), isNull);
