@@ -28,7 +28,9 @@ void main() {
       },
     );
 
-    testWidgets('should have automatic theme support', (WidgetTester tester) async {
+    testWidgets('should have automatic theme support', (
+      WidgetTester tester,
+    ) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
 

@@ -145,7 +145,9 @@ class _NewItemState extends State<NewItem> {
                                           height: 20,
                                           decoration: BoxDecoration(
                                             color: category.value.color,
-                                            borderRadius: BorderRadius.circular(4),
+                                            borderRadius: BorderRadius.circular(
+                                              4,
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(width: 12),
@@ -165,7 +167,8 @@ class _NewItemState extends State<NewItem> {
                         );
                       },
                       onSaved: (value) {
-                        _selectedCategory = value ?? categories[Categories.vegetables]!;
+                        _selectedCategory =
+                            value ?? categories[Categories.vegetables]!;
                       },
                     ),
                   ),
@@ -181,7 +184,8 @@ class _NewItemState extends State<NewItem> {
                     child: OutlinedButton.icon(
                       onPressed: () {
                         setState(() {
-                          _selectedCategory = categories[Categories.vegetables]!;
+                          _selectedCategory =
+                              categories[Categories.vegetables]!;
                           _enteredQuantity = 1;
                         });
                         _formKey.currentState!.reset();
