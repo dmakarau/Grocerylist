@@ -120,6 +120,7 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<Category>(
+                      // ignore: deprecated_member_use
                       value: _selectedCategory,
                       decoration: InputDecoration(
                         labelText: "Category",
