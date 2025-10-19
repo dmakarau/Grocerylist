@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:grocery_list/config/app_config.dart';
 import 'package:grocery_list/data/categories.dart';
 import 'package:grocery_list/models/category.dart';
 import 'package:grocery_list/models/grocery_item.dart';
+import 'package:http/http.dart' as http;
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -17,18 +21,121 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = "";
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
+  var _isSending = false;
 
-  void _saveItem() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      Navigator.of(context).pop(
-        GroceryItem(
-          id: DateTime.now().microsecondsSinceEpoch.toString(),
-          name: _enteredName,
-          quantity: _enteredQuantity,
-          category: _selectedCategory,
+  String _getHumanReadableError(dynamic error) {
+    final errorString = error.toString().toLowerCase();
+    
+    if (errorString.contains('timeout') || 
+        errorString.contains('connection timeout')) {
+      return '📶 No internet connection. Please check your network and try again.';
+    }
+    
+    if (errorString.contains('socket') || 
+        errorString.contains('network') ||
+        errorString.contains('host lookup failed') ||
+        errorString.contains('connection refused')) {
+      return '🌐 Network error. Please check your internet connection.';
+    }
+    
+    if (errorString.contains('failed to save') ||
+        errorString.contains('400') ||
+        errorString.contains('500')) {
+      return '⚠️ Server error. Please try again in a moment.';
+    }
+    
+    // Fallback for any other errors
+    return '❌ Something went wrong. Please try again.';
+  }
+
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.error_outline,
+              color: Colors.white,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ),
+          ],
         ),
-      );
+        backgroundColor: Theme.of(context).colorScheme.error,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        action: SnackBarAction(
+          label: 'Retry',
+          textColor: Colors.white,
+          onPressed: _saveItem,
+        ),
+        duration: const Duration(seconds: 6),
+      ),
+    );
+  }
+
+  void _saveItem() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSending = true;
+      });
+      _formKey.currentState!.save();
+      
+      try {
+        final url = AppConfig.getFirebaseUrl('groceries.json');
+        final response = await http.post(
+          url,
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'name': _enteredName,
+            'quantity': _enteredQuantity,
+            'category': _selectedCategory.title,
+          }),
+        ).timeout(
+          const Duration(seconds: 10), // Add timeout
+          onTimeout: () {
+            throw Exception('Connection timeout. Please check your internet connection.');
+          },
+        );
+
+        if (response.statusCode >= 400) {
+          throw Exception('Failed to save item. Please try again.');
+        }
+
+        final responseData = json.decode(response.body);
+
+        if (!context.mounted) {
+          return;
+        }
+        
+        Navigator.of(context).pop(
+          GroceryItem(
+            id: responseData['name'],
+            name: _enteredName,
+            quantity: _enteredQuantity,
+            category: _selectedCategory,
+          ),
+        );
+      } catch (error) {
+        setState(() {
+          _isSending = false;
+        });
+        
+        if (!context.mounted) {
+          return;
+        }
+        
+        _showErrorSnackbar(_getHumanReadableError(error));
+      }
     }
   }
 
@@ -182,14 +289,16 @@ class _NewItemState extends State<NewItem> {
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: () {
-                        setState(() {
-                          _selectedCategory =
-                              categories[Categories.vegetables]!;
-                          _enteredQuantity = 1;
-                        });
-                        _formKey.currentState!.reset();
-                      },
+                      onPressed: _isSending
+                          ? null
+                          : () {
+                              setState(() {
+                                _selectedCategory =
+                                    categories[Categories.vegetables]!;
+                                _enteredQuantity = 1;
+                              });
+                              _formKey.currentState!.reset();
+                            },
                       icon: const Icon(Icons.refresh),
                       label: const Text("Reset"),
                       style: OutlinedButton.styleFrom(
@@ -204,9 +313,15 @@ class _NewItemState extends State<NewItem> {
                   Expanded(
                     flex: 2,
                     child: FilledButton.icon(
-                      onPressed: _saveItem,
+                      onPressed: _isSending ? null : _saveItem,
                       icon: const Icon(Icons.add),
-                      label: const Text("Add Item"),
+                      label: _isSending
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Text("Add Item"),
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
