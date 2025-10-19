@@ -10,8 +10,14 @@ void main() async {
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {
-    // If .env file doesn't exist or can't be loaded, continue with defaults
-    debugPrint('Could not load .env file: $e');
+    // If .env file doesn't exist, try loading .env.example as fallback
+    try {
+      await dotenv.load(fileName: ".env.example");
+      debugPrint('Loaded .env.example as fallback');
+    } catch (e2) {
+      // If both files fail, continue with defaults
+      debugPrint('Could not load .env or .env.example files: $e2');
+    }
   }
   
   runApp(const MyApp());
