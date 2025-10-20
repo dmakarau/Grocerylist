@@ -113,9 +113,7 @@ class _NewItemState extends State<NewItem> {
 
         final responseData = json.decode(response.body);
 
-        if (!context.mounted) {
-          return;
-        }
+        if (!mounted) return;
         
         Navigator.of(context).pop(
           GroceryItem(
@@ -130,9 +128,7 @@ class _NewItemState extends State<NewItem> {
           _isSending = false;
         });
         
-        if (!context.mounted) {
-          return;
-        }
+        if (!mounted) return;
         
         _showErrorSnackbar(_getHumanReadableError(error));
       }
