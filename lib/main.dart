@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grocery_list/widgets/grocery_list.dart';
 
-void main() {
+void main() async {
+  // Ensure Flutter is initialized before loading environment variables
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load environment variables from .env file
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    // If .env file doesn't exist, try loading .env.example as fallback
+    try {
+      await dotenv.load(fileName: ".env.example");
+      debugPrint('Loaded .env.example as fallback');
+    } catch (e2) {
+      // If both files fail, continue with defaults
+      debugPrint('Could not load .env or .env.example files: $e2');
+    }
+  }
+  
   runApp(const MyApp());
 }
 
